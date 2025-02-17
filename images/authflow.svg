@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600">
+  <rect x="10" y="10" width="780" height="580" fill="white" stroke="black"/>
+  
+  <!-- Participants -->
+  <text x="50" y="40" font-size="16" font-weight="bold">Client</text>
+  <text x="300" y="40" font-size="16" font-weight="bold">AUTH-RESOLVE</text>
+  <text x="550" y="40" font-size="16" font-weight="bold">PostgreSQL</text>
+  
+  <!-- Login Flow -->
+  <text x="200" y="70" font-size="14">Login Flow</text>
+  
+  <!-- Request with Credentials -->
+  <line x1="50" y1="100" x2="300" y2="100" stroke="black"/>
+  <text x="120" y="95" font-size="12">HTTPS Request with Credentials</text>
+  
+  <!-- DB Request -->
+  <line x1="300" y1="120" x2="550" y2="120" stroke="black"/>
+  <text x="370" y="115" font-size="12">UserBmc::first_by_username()</text>
+  
+  <!-- DB Response -->
+  <line x1="550" y1="140" x2="300" y2="140" stroke="black"/>
+  <text x="370" y="135" font-size="12">UserForLogin {id, username, pwd, ...}</text>
+  
+  <!-- Encryption and Validation -->
+  <text x="320" y="160" font-size="12">ENCRYPT(pwd_clear)</text>
+  <text x="320" y="180" font-size="12">VALIDATE(pwd, user.pwd)</text>
+  
+  <!-- Token Creation -->
+  <line x1="300" y1="200" x2="300" y2="220" stroke="black"/>
+  <text x="320" y="215" font-size="12">CREATE_TOKEN(username, token_salt)</text>
+  
+  <!-- Token Format -->
+  <text x="320" y="240" font-size="12">Token Format: username_b64u.expiration_b64u.signature_b64u</text>
+  
+  <!-- Token Response -->
+  <line x1="300" y1="260" x2="50" y2="260" stroke="black"/>
+  <text x="120" y="255" font-size="12">Set-Cookie: auth-token (HttpOnly)</text>
+  
+  <!-- Token Validation -->
+  <text x="200" y="290" font-size="14">Token Validation</text>
+  
+  <!-- Auth Token Request -->
+  <line x1="50" y1="320" x2="300" y2="320" stroke="black"/>
+  <text x="120" y="315" font-size="12">Request with auth-token</text>
+  
+  <!-- DB Auth Request -->
+  <line x1="300" y1="340" x2="550" y2="340" stroke="black"/>
+  <text x="370" y="335" font-size="12">UserBmc::first_by_username()</text>
+  
+  <!-- DB Auth Response -->
+  <line x1="550" y1="360" x2="300" y2="360" stroke="black"/>
+  <text x="370" y="355" font-size="12">UserForAuth {id, username, token_salt}</text>
+  
+  <!-- Token Validation Process -->
+  <text x="320" y="380" font-size="12">Validate token signature & expiration</text>
+  
+  <!-- Authorized Response -->
+  <line x1="300" y1="400" x2="50" y2="400" stroke="black"/>
+  <text x="120" y="395" font-size="12">Response with authorized data</text>
+</svg>
