@@ -1,0 +1,23 @@
+sequenceDiagram
+    participant C as Client
+    participant R as AUTH-RESOLVE
+    participant DB as PostgreSQL
+    
+    Note over C,DB: Login Flow
+    C->>+R: HTTPS Request with Credentials
+    R->>+DB: UserBmc::first_by_username()
+    DB-->>-R: UserForLogin {id, username, pwd, pwd_salt, token_salt}
+    
+    Note over R: ENCRYPT(pwd_clear)
+    Note over R: VALIDATE(pwd, user.pwd)
+    
+    R->>R: CREATE_TOKEN(username, token_salt)
+    Note over R: Token Format:<br/>username_b64u.expiration_b64u.signature_b64u
+    R-->>-C: Set-Cookie: auth-token (HttpOnly)
+    
+    Note over C,DB: Token Validation
+    C->>+R: Request with auth-token
+    R->>DB: UserBmc::first_by_username()
+    DB-->>R: UserForAuth {id, username, token_salt}
+    Note over R: Validate token signature & expiration
+    R-->>-C: Response with authorized data
